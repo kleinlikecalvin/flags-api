@@ -1,0 +1,23 @@
+$dark-mode-elements: hsl(209, 23%, 22%);
+$dark-mode-bg: hsl(207, 26%, 17%);
+$light-mode-text: hsl(200, 15%, 8%);
+$light-mode-input: hsl(0, 0%, 52%);
+$light-mode-bg: hsl(0, 0%, 98%);
+$font: "Nunito Sans", sans-serif;
+
+.App {
+  background: $light-mode-bg;
+  font-family: $font;
+  .search-filter-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    margin: 40px 60px;
+  }
+  .countries-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    padding: 0 60px;
+  }
+}

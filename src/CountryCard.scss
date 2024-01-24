@@ -1,0 +1,25 @@
+.CountryCard {
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 0 4px lightgray;
+  overflow: hidden;
+  text-decoration: none;
+  .flag {
+    width: auto;
+    height: 50%;
+    display: block;
+  }
+  .details {
+    padding: 0 20px;
+    color: black;
+    ul {
+      list-style: none;
+      padding: 0;
+      font-size: 14px;
+      strong {
+        text-transform: capitalize;
+        font-weight: 600;
+      }
+    }
+  }
+}
