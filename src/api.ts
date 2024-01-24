@@ -1,19 +1,43 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
-export function useGetCountryList() {
-  const [response, setResponse] = useState<Country[]>();
+export type CountryFilters = { region?: string; name?: string };
+
+export function useGetCountryList(filters?: CountryFilters): Country[] {
+  const [response, setResponse] = useState<Country[]>([]);
+  const abort = useRef(new AbortController());
 
   useEffect(() => {
-    fetch("http://localhost:3001/countries").then(async (res) => {
+    const url = new URL("/api/countries", window.location.origin);
+
+    if (filters?.name) url.searchParams.set("name", filters.name);
+    if (filters?.region) url.searchParams.set("region", filters.region);
+
+    fetch(url, { signal: abort.current.signal })
+      .then(async (res) => {
+        const countries = (await res.json()) as Country[];
+        setResponse(countries);
+      })
+      .catch(console.error);
+
+    return () => {
+      abort.current.abort();
+      abort.current = new AbortController();
+    };
+  }, [filters?.name, filters?.region]);
+
+  return response;
+}
+
+export function useGetCountryByCode(code: string): Country[] {
+  const [response, setResponse] = useState<Country[]>([]);
+
+  useEffect(() => {
+    fetch(`/api/countries/${code}`).then(async (res) => {
       const countries = (await res.json()) as Country[];
       setResponse(countries);
     });
-  }, []);
+  }, [code]);
 
-  /**
-   * @NOTE
-   * -- 🚨 Need error handling
-   */
   return response;
 }
 
