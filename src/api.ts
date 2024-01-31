@@ -28,12 +28,12 @@ export function useGetCountryList(filters?: CountryFilters): Country[] {
   return response;
 }
 
-export function useGetCountryByCode(code: string): Country[] {
-  const [response, setResponse] = useState<Country[]>([]);
+export function useGetCountryByCode(code: string): Country | undefined {
+  const [response, setResponse] = useState<Country>();
 
   useEffect(() => {
     fetch(`/api/countries/${code}`).then(async (res) => {
-      const countries = (await res.json()) as Country[];
+      const countries = (await res.json()) as Country;
       setResponse(countries);
     });
   }, [code]);
