@@ -40,7 +40,7 @@ app.get("/api/countries/:code", function getCountryByCode(req, res, next) {
   );
 
   if (!country) {
-    return res.status(400).send(`No country found matching ${countryCode}`);
+    return res.status(404).send(`No country found matching ${countryCode}`);
   }
 
   return res.status(200).json(country);
